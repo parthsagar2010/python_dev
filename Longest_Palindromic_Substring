@@ -1,0 +1,33 @@
+import math
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        cnt = 0
+        lar_pal = []
+        lar_cnt = []
+        if len(s)==0:
+            return s
+        if len(s)==1:
+            return s
+        for idx in range(0,2*(len(s)-1)):
+            cnt = cnt + 0.5
+            if cnt == len(s)-1:
+                break
+            prev = math.ceil(cnt-1)
+            nex = math.floor(cnt+1)
+            # print ("before while idx: {0} prev {1} next {2}".format(cnt,prev,nex))
+            if s[prev] != s[nex]:
+                lar_pal.append(s[prev])
+                lar_cnt.append(len(s[prev]))
+                continue
+            try:
+                while(s[prev] == s[nex] and (prev >=0) and (nex <len(s))):
+                    # print ("idx: {0} prev {1} next {2}".format(cnt,prev,nex))
+                    lar_pal.append(s[prev:nex+1])
+                    lar_cnt.append(len(s[prev:nex+1]))
+                    # print (s[prev:nex+1])
+                    prev = prev - 1
+                    nex = nex + 1
+            except:
+                continue
+        return lar_pal[lar_cnt.index(max(lar_cnt))]
+#lar_pal[max(lar_cnt)]
